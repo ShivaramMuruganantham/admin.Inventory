@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\category;
 use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\Sale;
@@ -33,6 +34,8 @@ class DashboardController extends Controller
 
         $totalStock = Inventory::where('shop_id', $userShop->shop_id)->sum('stock_qty');
 
+        $totalCategory = Category::count();
+
         return response()->json([
             "data" => [
                 "user" => [
@@ -46,6 +49,7 @@ class DashboardController extends Controller
                 "total_sale_amount" => $totalSale,
                 "total_product" => $totalProduct,
                 "total_sold" => $totalSold,
+                "total_category" => $totalCategory,
                 "total_stock" => $totalStock
             ],
             "status" => true,
