@@ -23,6 +23,6 @@ class Product extends Model
     }
 
     public function inventory() {
-        return $this->hasMany(Inventory::class);
+        return $this->hasMany(Inventory::class)->select('id', 'shop_id', 'product_id', 'stock_qty');
     }
 }
