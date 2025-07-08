@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('quantity');
             $table->string('price');
-            $table->string('barcode');
+            $table->string('barcode')->nullable();
         });
     }
 
