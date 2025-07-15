@@ -31,7 +31,7 @@ class SaleController extends Controller
         ]);
     }
 
-    function graphData($year) {
+    function saleGraph($year) {
         
         $user = Auth::user();
 
@@ -50,7 +50,7 @@ class SaleController extends Controller
             $total = $salesGraph->has($month) ? $salesGraph->get($month)->total : 0;
             return [
                 'month' => $month,
-                'month_name' => Carbon::create()->month($month)->format('F'),
+                'month_name' => Carbon::create()->month($month)->format('M'),
                 'total' => $total
             ];
         });
@@ -59,7 +59,6 @@ class SaleController extends Controller
             'status' => true,
             'graph' => $result
         ]);
-       
     }
 
     function salesDetails($year) {
