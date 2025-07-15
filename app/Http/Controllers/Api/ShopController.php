@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Revenue;
+use App\Models\Sale_item;
 use App\Models\Shop;
+use App\Models\Shop_user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShopController extends Controller
 {
@@ -31,9 +35,40 @@ class ShopController extends Controller
         ]);
 
         return response()->json([
+            'status' => true,
             'message' => 'Shop registered successfully',
-            'shop' => $shop,
-            'status' => true
+            'shop' => $shop
+        ], 201);
+    }
+
+    function totalRevenues() {
+        $user = Auth::user();
+        $shopId = Shop_user::where('user_id', $user->id)->first()->shop_id;
+
+        $revenues = Revenue::where('shop_id', $shopId)->get();
+
+        return response()->json([
+            'status' => true,
+            'revenues' => $revenues
+        ]);
+    }
+
+    function revenueTarget(Request $request) {
+        $user = Auth::user();
+        $shopId = Shop_user::where('user_id', $user->id)->first()->shop_id;
+
+        $saleAmount = Sale_item::where('shop_id', $shopId)->whereYear('created_at', date('Y'))->sum('price');
+
+        $revenue = Revenue::create([
+            'shop_id' => $shopId,
+            'year' => date('Y'),
+            'expected_amount' => $request->expected_amount,
+            'collected_amount' =>  $saleAmount ?? 0,
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Revenue added successfully'
         ], 201);
     }
 
