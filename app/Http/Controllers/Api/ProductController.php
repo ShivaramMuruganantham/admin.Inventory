@@ -119,6 +119,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'quantity' => $request->quantity,
             'category_id' => $request->category_id,
+            'gst' => $request->gst,
             'barcode' => $request->barcode ?? null
         ]);
 
