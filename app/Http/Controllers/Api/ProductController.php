@@ -154,4 +154,12 @@ class ProductController extends Controller
             'products' => $products
         ]);
     }
+
+    public function productCategoryFilter($id) {
+        $products = Product::where('category_id', $id)->with('inventory')->get();
+        return response()->json([
+            'status' => true,
+            'products' => $products
+        ]);
+    }
 }
