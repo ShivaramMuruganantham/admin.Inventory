@@ -17,7 +17,7 @@ class SaleItemsController extends Controller
         $sale = Sale::create([
             'shop_id' => $shopId,
             'user_id' => $user->id,
-            'total_amount' => $request->total ?? null
+            'total_amount' => $request->total
         ]);
 
         foreach($request->items as $item) {
@@ -31,6 +31,7 @@ class SaleItemsController extends Controller
 
         return response()->json([
             'status' => true,
+            'message' => 'Sale added successfully',
             'sale' => $sale
         ]);
     }
