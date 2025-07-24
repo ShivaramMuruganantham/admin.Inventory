@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\InventoryController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\SaleController;
+use App\Http\Controllers\Api\SaleItemsController;
 use App\Http\Controllers\Api\ShopController;
 use App\Http\Controllers\Api\UserController;
 use App\Models\User;
@@ -29,12 +30,15 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/analysis/product/{years}', [ProductController::class, 'availableYears'])->name('availableYears');
     Route::get('/analysis/product/graph/{year}', [ProductController::class, "productGraph"])->name('productGraph');
+    Route::get('/analysis/product/category/{id}', [ProductController::class, "productCategoryFilter"])->name('productCategoryFilter');
     
     Route::get('shop/product/category', [ProductController::class, "productCategory"])->name('productCategory');
 
     Route::get('/shop/product', [ProductController::class, "productDetails"])->name('productDetails');
     Route::get('/shop/product/search', [ProductController::class, "searchProducts"])->name('searchProducts');
     Route::post('/shop/product/new', [ProductController::class, "addProduct"])->name('addProduct');
+
+    Route::post('/shop/product/checkout', [SaleItemsController::class, "salesEntery"])->name('salesEntery');
 
     Route::post('/shop/inventory/update', [InventoryController::class, "updateStock"])->name('updateStock');
 });
