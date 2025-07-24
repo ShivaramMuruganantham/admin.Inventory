@@ -16,7 +16,6 @@ return new class extends Migration
             $table->timestamps();
             $table->string('shop_id');
             $table->string('user_id');
-            $table->string('total_amount');
         });
     }
 
